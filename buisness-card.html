@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Centered Navbar</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .background {
+      background-color: #000000;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .box {
+      margin-top: 18rem;
+    }
+    @media (max-width: 768px) {
+      .box {
+        margin-top: 4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="background">
+    <!-- Navbar -->
+    <nav>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <div class="text-3xl font-bold text-gray-100 hover:text-blue-600 text-left mt-2">CardCrafter</div>
+          <!-- Centered Menu -->
+          <div class="hidden md:flex justify-center space-x-8">
+            <a href="#" class="text-gray-100 hover:text-blue-600 mt-2">Templates</a>
+            <a href="#" class="text-gray-100 hover:text-blue-600 mt-2">Design & Studio</a>
+            <a href="#" class="text-gray-100 hover:text-blue-600 mt-2">AI</a>
+            <a href="#" class="text-gray-100 hover:text-blue-600 mt-2">Price</a>
+          </div>
+          <div class="hidden md:flex justify-center space-x-8">
+            <a href="#" class="text-gray-100 hover:text-blue-600 mt-4">Login</a>
+            <a href="#" class="bg-blue-600 text-white px-6 py-2 mt-2 rounded-lg hover:bg-blue-700 transition duration-300">
+              Sign up for Free
+            </a>
+          </div>
+          <!-- Hamburger Button -->
+          <div class="md:hidden">
+            <button id="menu-toggle" class="text-gray-700 focus:outline-none">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+                   viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 6h16M4 12h16M4 18h16"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Mobile Menu -->
+      <div class="md:hidden">
+        <div id="mobile-menu" class="hidden flex flex-col items-center px-4 pb-4 space-y-2">
+          <a href="#" class="block py-2 text-gray-100 hover:text-blue-600 w-full text-center">Templates</a>
+          <a href="#" class="block py-2 text-gray-100 hover:text-blue-600 w-full text-center">Design & Studio</a>
+          <a href="#" class="block py-2 text-gray-100 hover:text-blue-600 w-full text-center">AI</a>
+          <a href="#" class="block py-2 text-gray-100 hover:text-blue-600 w-full text-center">Price</a>
+          <a href="#" class="block py-2 text-gray-100 hover:text-blue-600 w-full text-center">Login</a>
+            <a href="#" class="block bg-blue-600 text-white px-4 py-1.5 rounded-md hover:bg-blue-700 transition duration-300 w-full text-center text-sm sm:text-base">
+            Sign up for Free
+          </a>
+        </div>
+      </div>
+    </nav>
+    <div>
+      <div class="box flex flex-col md:flex-row items-center justify-between max-w-7xl mx-auto px-4 mt-48">
+        <div class="md:w-1/2 w-full text-center md:text-left">
+          <h1 class="text-4xl font-bold mb-4 text-white hover:text-white">Design Your Business Card with Ease</h1>
+          <p class="text-lg mb-6 mt-4 text-white hover:text-white">
+            Create a stunning business card in seconds. 100% Free – No design skills needed.
+          </p>
+          <div class="mt-6 flex justify-center md:justify-start">
+            <!-- Button to open modal -->
+            <button id="open-card-modal" class="bg-blue-600 text-white px-5 mt-4 py-4 rounded-lg hover:bg-blue-700">
+              Create Your own Business Card
+            </button>
+
+            <!-- Modal Overlay -->
+            <div id="card-modal-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center">
+              <!-- Modal Content -->
+              <div class="bg-white rounded-xl shadow-lg w-full max-w-md mx-4 p-8 relative">
+              <button id="close-card-modal" class="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-2xl font-bold">&times;</button>
+              <h2 class="text-2xl font-bold mb-4 text-center">Business Card Details</h2>
+              <form id="card-form" class="flex flex-col gap-4">
+                <input type="text" name="name" placeholder="Enter your name" class="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required />
+                <input type="text" name="address" placeholder="Enter your address" class="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required />
+                <input type="text" name="work" placeholder="Enter your working details" class="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400" required />
+                <button type="submit" class="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition">Generate Card</button>
+              </form>
+              </div>
+            </div>
+            <script>
+              // Modal open/close logic
+              document.addEventListener('DOMContentLoaded', function () {
+              const openBtn = document.getElementById('open-card-modal');
+              const closeBtn = document.getElementById('close-card-modal');
+              const overlay = document.getElementById('card-modal-overlay');
+
+              openBtn.addEventListener('click', () => {
+                overlay.classList.remove('hidden');
+              });
+              closeBtn.addEventListener('click', () => {
+                overlay.classList.add('hidden');
+              });
+              overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) overlay.classList.add('hidden');
+              });
+              // Prevent form submission (for demo)
+              document.getElementById('card-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Business card generated! (Demo)');
+                overlay.classList.add('hidden');
+              });
+              });
+            </script>
+          </div>
+        </div>
+        <div class="md:w-1/2 flex justify-center md:justify-end mt-12 md:mt-0 w-full">
+          <img 
+            src="https://bcassetcdn.com/assets/images/web/maker-home/how-bc-step-1@2x.en-us.webp" 
+            alt="Example Image" 
+            class="rounded-lg shadow-lg w-64 sm:w-80 md:w-96 lg:w-[28rem] max-w-full h-auto"
+            style="transform: rotate(-32.77deg);"/>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+    <!-- Explore page -->
+    <section id="explore" class="mt-10 w-screen max-w-none bg-white">
+      <div class="w-full min-h-screen flex flex-col">
+      <div class="max-w-7xl w-full mx-auto px-4 flex-1">
+        <h2 class="text-center text-4xl font-semibold mt-10 mb-2">Explore a Smarter Way to Design Business Cards</h2>
+        <h5 class="text-center mt-2 mb-8 text-lg">Build your perfect business card in just a few clicks. Quick, easy, and completely free!</h5>
+
+        <!-- Search Bar -->
+        <div class="w-full flex justify-center items-center mb-6">
+          <input type="text" placeholder="Search..." class="w-full max-w-xl h-10 text-base md:text-xl px-4 md:px-6 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-400" />
+          <button class="bg-red-600 text-white h-10 px-4 md:px-6 rounded-r-md hover:bg-red-700 transition duration-300 flex items-center justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 md:w-7 md:h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" fill="none"/>
+          <line x1="16.5" y1="16.5" x2="21" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+          </button>
+        </div>
+
+        <!-- Category Buttons with Side Arrows -->
+        <div class="relative w-full max-w-4xl mx-auto flex items-center justify-center mb-8">
+          <!-- Left Arrow -->
+          <button id="cat-left" class="absolute left-0 z-10 bg-white/80 hover:bg-gray-200 rounded-full p-2 shadow transition hidden md:block">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+          </button>
+          <!-- Scrollable Category List -->
+          <div id="cat-scroll" class="flex flex-nowrap gap-3 overflow-x-auto scrollbar-hide px-2 md:px-10 w-full">
+        <button class="bg-gray-100 text-gray-700 px-5 py-2 rounded-full text-base font-medium hover:bg-gray-200 transition whitespace-nowrap">All</button>
+        <button class="bg-gray-100 text-gray-700 px-5 py-2 rounded-full text-base font-medium hover:bg-gray-200 transition whitespace-nowrap">Elegant</button>
+        <button class="bg-gray-100 text-gray-700 px-5 py-2 rounded-full text-base font-medium hover:bg-gray-200 transition whitespace-nowrap">Modern</button>
+        <button class="bg-gray-100 text-gray-700 px-5 py-2 rounded-full text-base font-medium hover:bg-gray-200 transition whitespace-nowrap">Minimal</button>
+        <button class="bg-gray-100 text-gray-700 px-5 py-2 rounded-full text-base font-medium hover:bg-gray-200 transition whitespace-nowrap">Creative</button>
+        <button class="bg-gray-100 text-gray-700 px-5 py-2 rounded-full text-base font-medium hover:bg-gray-200 transition whitespace-nowrap">Classic</button>
+        <button class="bg-gray-100 text-gray-700 px-5 py-2 rounded-full text-base font-medium hover:bg-gray-200 transition whitespace-nowrap">Bold</button>
+        <button class="bg-gray-100 text-gray-700 px-5 py-2 rounded-full text-base font-medium hover:bg-gray-200 transition whitespace-nowrap">Professional</button>
+        <button class="bg-gray-100 text-gray-700 px-5 py-2 rounded-full text-base font-medium hover:bg-gray-200 transition whitespace-nowrap">Luxury</button>
+        <button class="bg-gray-100 text-gray-700 px-5 py-2 rounded-full text-base font-medium hover:bg-gray-200 transition whitespace-nowrap">Trendy</button>
+          </div>
+          <!-- Right Arrow -->
+          <button id="cat-right" class="absolute right-0 z-10 bg-white/80 hover:bg-gray-200 rounded-full p-2 shadow transition hidden md:block">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+          </button>
+        </div>
+
+        <!-- Templates Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-4 w-full">
+          <div><img src="https://i.pinimg.com/736x/a5/ca/b2/a5cab234b63b1548489006bcfe4decd1.jpg" alt="" class="w-full h-48 object-cover rounded-lg shadow" /></div>
+          <div><img src="https://i.pinimg.com/736x/3a/41/92/3a41925d96f503e5be7bec28dc511c10.jpg" alt="" class="w-full h-48 object-cover rounded-lg shadow" /></div>
+          <div><img src="https://i.pinimg.com/736x/93/94/61/93946100acf0c4b4aac17130a8097474.jpg" alt="" class="w-full h-48 object-cover rounded-lg shadow" /></div>
+          <div><img src="https://i.pinimg.com/736x/f7/fc/42/f7fc42ee9cf1b2a2475bd1349220e2b1.jpg" alt="" class="w-full h-48 object-cover rounded-lg shadow" /></div>
+          <div><img src="https://i.pinimg.com/736x/db/7a/50/db7a50c63f35099e69a05b58e36ab3c9.jpg" alt="" class="w-full h-48 object-cover rounded-lg shadow" /></div>
+          <div><img src="https://i.pinimg.com/736x/0e/fa/d1/0efad12eea4c502ccaa7ba7d54c32475.jpg" alt="" class="w-full h-48 object-cover rounded-lg shadow" /></div>
+          <div><img src="https://i.pinimg.com/474x/ef/bf/eb/efbfeb2ef4e12cc70dcea337ecabdc50.jpg" alt="" class="w-full h-48 object-cover rounded-lg shadow" /></div>
+          <div><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdgQh-y_IRCW81TIkCHYE3rVweOyAyAbHfiQ&s" alt="" class="w-full h-48 object-cover rounded-lg shadow" /></div>
+          <div><img src="https://dynamic.brandcrowd.com/template/preview/design/ffe5a634-53d6-4262-948b-e6e90c1f1613/2ddf230a-e4e6-4e66-b3b3-25ee28bd250e?v=4&designTemplateVersion=8&logoTemplateVersion=1&size=design-preview-wide-1x" alt="" class="w-full h-48 object-cover rounded-lg shadow" /></div>
+          <div><img src="https://dynamic.brandcrowd.com/template/preview/design/ffe5a634-53d6-4262-948b-e6e90c1f1613/ab047ab7-dd66-4726-9416-a640b03c059b?v=4&designTemplateVersion=8&logoTemplateVersion=1&size=design-preview-wide-1x" alt="" class="w-full h-48 object-cover rounded-lg shadow" /></div>
+          <div><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdgQh-y_IRCW81TIkCHYE3rVweOyAyAbHfiQ&s" alt="" class="w-full h-48 object-cover rounded-lg shadow" /></div>
+          <div><img src="https://marketplace.canva.com/EAFtZX5KqKA/1/0/1600w/canva-blue-and-gold-modern-business-consultant-business-card-IMQWCX2CjNk.jpg" alt="" class="w-full h-48 object-cover rounded-lg shadow" /></div>
+          <div><img src="https://dynamic.brandcrowd.com/template/preview/design/ffe5a634-53d6-4262-948b-e6e90c1f1613/5be1ba2b-2dc3-4674-9a3d-4e19718aa070?v=4&designTemplateVersion=8&logoTemplateVersion=2&size=design-preview-wide-1x" alt="" class="w-full h-48 object-cover rounded-lg shadow" /></div>
+          <div><img src="https://i.pinimg.com/474x/88/2f/f7/882ff742df1b9aaf152c4363a04f33ec.jpg" alt="" class="w-full h-48 object-cover rounded-lg shadow" /></div>
+          <div><img src="https://i.pinimg.com/736x/8e/99/e4/8e99e49cb8fb11842420ec2f5a283047.jpg" alt="" class="w-full h-48 object-cover rounded-lg shadow" /></div>
+          <div><img src="https://dynamic.brandcrowd.com/template/preview/design/ffe5a634-53d6-4262-948b-e6e90c1f1613/2ddf230a-e4e6-4e66-b3b3-25ee28bd250e?v=4&designTemplateVersion=8&logoTemplateVersion=1&size=design-preview-wide-1x" alt="" class="w-full h-48 object-cover rounded-lg shadow" /></div>
+        </div>
+
+        <div class="flex justify-center mt-10">
+          <button class="bg-red-600 text-white px-8 py-3 rounded-lg font-semibold text-lg hover:bg-red-700 transition duration-300">
+        View more Business Cards
+          </button>
+        </div>
+      </div>
+
+      <!-- Customize Steps Section: Full-width black background -->
+      <div class="w-screen relative left-1/2 right-1/2 -mx-[50vw] px-0 mt-10" style="background:#000 ; ">
+        <div class="max-w-10xl mx-auto px-4 py-12">
+          <!-- Header Content -->
+          <div class="mb-12 text-center">
+        <h2 class="text-4xl font-bold mb-2 text-white">How to Customize Your Business Card</h2>
+        <p class="text-lg text-gray-200">Follow these simple steps to create a professional business card tailored to your brand.</p>
+          </div>
+            <!-- Step 1 -->
+            <div class="flex flex-col md:flex-row items-center justify-between gap-10 mb-20">
+              <div class="md:w-1/2 w-full text-center md:text-left md:ml-16">
+              <h2 class="text-3xl md:text-4xl font-semibold mb-4 text-white">1. Find a business card template</h2>
+              <p class="text-base md:text-lg mb-6 text-gray-200">
+                Get started with Card Crafter’s Business Card Maker. Simply enter your business name and instantly explore a variety of related designs. Browse thousands of professional business card templates and find the perfect one to represent your brand. Want something more specific? Enter keywords to discover business card styles you’ll truly love.
+              </p>
+              <div class="mt-4 flex justify-center md:justify-start">
+                <a href="#" class="bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition duration-300">
+                Explore Cards
+                </a>
+              </div>
+              </div>
+              <div class="md:w-1/2 flex justify-center md:justify-end w-full mt-10 md:mt-0">
+              <img 
+                src="https://bcassetcdn.com/assets/images/web/maker-home/how-bc-step-1@2x.en-us.webp" 
+                alt="Find template step" 
+                class="rounded-lg shadow-lg w-64 sm:w-80 md:w-96 lg:w-[28rem] max-w-full h-auto" />
+              </div>
+            </div>
+            <!-- Step 2 -->
+            <div class="flex flex-col md:flex-row-reverse items-center justify-between gap-10 mb-20">
+              <div class="md:w-1/2 w-full text-center md:text-left md:mr-16">
+              <h2 class="text-3xl md:text-4xl font-semibold mb-4 text-white">2. Customize your card</h2>
+              <p class="text-base md:text-lg mb-6 text-gray-200">
+                Once you've chosen a design you like, it's time to make it yours. With Card Crafter's easy-to-use editor, you can personalize every detail — from your name, title, and contact information to fonts, colors, logos, and layout. Whether you're going for a sleek and modern look or something bold and creative, you have full control to craft a card that truly reflects your brand identity.
+              </p>
+              <div class="mt-4 flex justify-center md:justify-start">
+                <a href="#" class="bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition duration-300">
+                Start Customizing
+                </a>
+              </div>
+              </div>
+              <div class="md:w-1/2 flex justify-center md:justify-start w-full mt-10 md:mt-0">
+              <img 
+                src="https://bcassetcdn.com/assets/images/web/maker-home/how-bc-step-2@2x.en-us.webp" 
+                alt="Customize card step" 
+                class="rounded-lg shadow-lg w-64 sm:w-80 md:w-96 lg:w-[28rem] max-w-full h-auto" />
+              </div>
+            </div>
+            <!-- Step 3 -->
+            <div class="flex flex-col md:flex-row items-center justify-between gap-10">
+              <div class="md:w-1/2 w-full text-center md:text-left md:ml-16">
+              <h2 class="text-3xl md:text-4xl font-semibold mb-4 text-white">3. Download or print instantly</h2>
+              <p class="text-base md:text-lg mb-6 text-gray-200">
+                When you're happy with your design, it's time to bring it to life! With Card Crafter, you can download your business card in high-resolution formats like PDF, PNG, or JPG—perfect for printing at home, a local print shop, or using online printing services. Need a quick digital version? Your files are ready to share anytime. Prefer a physical card? We also offer professional printing and delivery right to your door.
+              </p>
+              <div class="mt-4 flex justify-center md:justify-start">
+                <a href="#" class="bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition duration-300">
+                Download Now
+                </a>
+              </div>
+              </div>
+              <div class="md:w-1/2 flex justify-center md:justify-end w-full mt-10 md:mt-0">
+              <img 
+                src="https://bcassetcdn.com/assets/images/web/maker-home/how-bc-step-3@2x.en-us.webp" 
+                alt="Download or print step" 
+                class="rounded-lg shadow-lg w-64 sm:w-80 md:w-96 lg:w-[28rem] max-w-full h-auto" />
+              </div>
+            </div>
+        </div>
+      </div>
+      </div>
+    <section class="ai"></section>
+      <div class="items-center min-h-[400px] py-10 md:py-16">
+        <div class="w-full flex flex-col items-center mb-6 md:mb-8 px-4">
+          <div class="flex flex-col items-center space-y-2">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center bg-gradient-to-r from-pink-500 via-blue-500 to-purple-500 bg-clip-text text-transparent">
+              AI-Powered Business Card Creator
+            </h2>
+            <p class="text-center text-base sm:text-lg bg-gradient-to-r from-pink-400 via-blue-400 to-purple-400 bg-clip-text text-transparent max-w-2xl">
+              Our AI-Powered Business Card Creator helps you design professional, personalized business cards in seconds — no design experience needed. Whether you're building your brand or launching your career, your perfect card is just a prompt away.
+            </p>
+          </div>
+        </div>
+        <div class="mx-auto w-full max-w-[95vw] sm:max-w-[600px] bg-white rounded-xl shadow-lg p-3 sm:p-4 md:p-8 flex flex-col gap-4">
+          <!-- Chat messages area -->
+          <div class="flex flex-col gap-3 max-h-60 sm:max-h-80 overflow-y-auto">
+            <!-- Example user message -->
+            <div class="self-end bg-blue-100 text-gray-800 rounded-lg px-3 py-2 sm:px-4 sm:py-2 max-w-[90%] sm:max-w-[80%] text-sm sm:text-base">
+              Hi, can you help me design a business card?
+            </div>
+            <!-- Example AI message -->
+            <div class="self-start bg-gray-100 text-gray-800 rounded-lg px-3 py-2 sm:px-4 sm:py-2 max-w-[90%] sm:max-w-[80%] text-sm sm:text-base">
+              Of course! Please describe your business or the style you want.
+            </div>
+            <!-- More messages will appear here -->
+          </div>
+          <!-- Input area -->
+          <div class="flex gap-2 mt-2">
+            <input type="text" placeholder="Type your message, e.g. 'Create a modern business card for a bakery'" class="flex-1 rounded-lg border border-gray-300 px-2 py-2 sm:px-3 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm sm:text-base" />
+            <button class="flex items-center gap-2 bg-gradient-to-r from-pink-500 to-blue-500 text-white px-4 sm:px-5 py-2 rounded-lg font-semibold shadow hover:from-pink-600 hover:to-blue-600 transition text-sm sm:text-base">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2v2m0 16v2m8-8h2M2 12H4m15.07-7.07l1.42 1.42M4.93 19.07l1.42-1.42M19.07 19.07l-1.42-1.42M4.93 4.93L6.35 6.35M12 6a6 6 0 100 12 6 6 0 000-12z"/>
+              </svg>
+              Generate
+            </button>
+          </div>
+        </div>
+        <div class="flex flex-col items-center mt-12 sm:mt-16 mb-6 sm:mb-8 px-4">
+          <h3 class="text-xl sm:text-2xl md:text-3xl font-bold text-center bg-gradient-to-r from-blue-600 via-purple-500 to-pink-500 bg-clip-text text-transparent mb-2">
+            How to Create a Business Card with AI in 4 Easy Steps
+          </h3>
+          <p class="text-center text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl">
+            Follow these simple steps to design your professional business card using our AI-powered generator.
+          </p>
+        </div>
+        <div class="w-full max-w-4xl mx-auto mt-8 sm:mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 px-2 sm:px-0">
+          <!-- Step 1 Card -->
+          <div class="bg-white rounded-2xl shadow-xl p-5 sm:p-8 flex flex-col items-center border border-blue-100">
+            <div class="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full mb-4 bg-gradient-to-br from-blue-500 to-blue-300">
+              <span class="text-lg sm:text-xl font-bold text-white">1</span>
+            </div>
+            <h4 class="text-base sm:text-xl font-semibold mb-2 text-gray-900 text-center">Describe your business</h4>
+            <p class="text-gray-700 text-center text-sm sm:text-base">
+              Type a short prompt about your business or the style you want in the chat above.
+            </p>
+          </div>
+          <!-- Step 2 Card -->
+          <div class="bg-white rounded-2xl shadow-xl p-5 sm:p-8 flex flex-col items-center border border-purple-100">
+            <div class="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full mb-4 bg-gradient-to-br from-purple-500 to-pink-400">
+              <span class="text-lg sm:text-xl font-bold text-white">2</span>
+            </div>
+            <h4 class="text-base sm:text-xl font-semibold mb-2 text-gray-900 text-center">Let AI generate designs</h4>
+            <p class="text-gray-700 text-center text-sm sm:text-base">
+              Click <span class="font-semibold text-blue-600">Generate</span> and our AI will suggest business card ideas instantly.
+            </p>
+          </div>
+          <!-- Step 3 Card -->
+          <div class="bg-white rounded-2xl shadow-xl p-5 sm:p-8 flex flex-col items-center border border-pink-100">
+            <div class="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full mb-4 bg-gradient-to-br from-pink-500 via-red-400 to-yellow-300">
+              <span class="text-lg sm:text-xl font-bold text-white">3</span>
+            </div>
+            <h4 class="text-base sm:text-xl font-semibold mb-2 text-gray-900 text-center">Review and customize</h4>
+            <p class="text-gray-700 text-center text-sm sm:text-base">
+              Pick your favorite design and personalize details like name, address, and colors.
+            </p>
+          </div>
+          <!-- Step 4 Card -->
+          <div class="bg-white rounded-2xl shadow-xl p-5 sm:p-8 flex flex-col items-center border border-green-100">
+            <div class="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full mb-4 bg-gradient-to-br from-green-400 via-blue-400 to-purple-500">
+              <span class="text-lg sm:text-xl font-bold text-white">4</span>
+            </div>
+            <h4 class="text-base sm:text-xl font-semibold mb-2 text-gray-900 text-center">Download or print</h4>
+            <p class="text-gray-700 text-center text-sm sm:text-base">
+              Save your card for free or order prints directly from the platform.
+            </p>
+          </div>
+        </div>
+        <!-- Pricing Cards Tagline -->
+        <div class="w-full flex flex-col items-center mb-6 sm:mb-8 mt-16 sm:mt-24 px-4">
+          <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-gray-900 mb-2">
+            Choose the Perfect Plan for Your Business Card Journey
+          </h2>
+          <p class="text-center text-base sm:text-lg text-gray-600 max-w-2xl">
+            Whether you're just starting out or need advanced features, CardCrafter has a plan for everyone. Unlock more creativity and power as you grow!
+          </p>
+        </div>
+        <!-- Pricing Cards Section -->
+        <div class="w-full max-w-5xl mx-auto mt-6 sm:mt-10 mb-8 sm:mb-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 px-2 sm:px-0">
+          <!-- Free Card -->
+          <div class="bg-white rounded-2xl shadow-xl p-6 sm:p-8 flex flex-col items-center border border-blue-200">
+            <h4 class="text-xl sm:text-2xl font-bold mb-2 text-blue-600">Free</h4>
+            <p class="text-3xl sm:text-4xl font-extrabold mb-4 text-gray-900">₹0<span class="text-base font-medium text-gray-500">/forever</span></p>
+            <ul class="mb-6 text-gray-700 space-y-2 text-center text-sm sm:text-base">
+              <li>✔️ Unlimited card designs</li>
+              <li>✔️ Download in standard quality</li>
+              <li class="sm:text-base text-xs text-center sm:text-left flex items-center justify-center sm:justify-start">✔️ Access to basic templates</li>
+              <li>✔️ AI-powered suggestions</li>
+            </ul>
+            <button class="bg-blue-600 text-white px-5 sm:px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition text-sm sm:text-base">Get Started</button>
+          </div>
+          <!-- Premium Card -->
+          <div class="bg-white rounded-2xl shadow-2xl p-6 sm:p-8 flex flex-col items-center border-2 sm:border-4 border-purple-400 scale-100 sm:scale-105 z-10">
+            <h4 class="text-xl sm:text-2xl font-bold mb-2 text-purple-600">Premium</h4>
+            <p class="text-3xl sm:text-4xl font-extrabold mb-4 text-gray-900">₹299<span class="text-base font-medium text-gray-500">/month</span></p>
+            <ul class="mb-6 text-gray-700 space-y-2 text-center text-sm sm:text-base">
+              <li>✔️ All Free features</li>
+              <li>✔️ Download in high resolution</li>
+              <li>✔️ Access to premium templates</li>
+              <li>✔️ Remove CardCrafter watermark</li>
+              <li>✔️ Priority support</li>
+            </ul>
+            <button class="bg-purple-600 text-white px-5 sm:px-6 py-2 rounded-lg font-semibold hover:bg-purple-700 transition text-sm sm:text-base">Upgrade to Premium</button>
+          </div>
+          <!-- Premium Plus Card -->
+          <div class="bg-white rounded-2xl shadow-xl p-6 sm:p-8 flex flex-col items-center border border-pink-200">
+            <h4 class="text-xl sm:text-2xl font-bold mb-2 text-pink-600">Premium Plus</h4>
+            <p class="text-3xl sm:text-4xl font-extrabold mb-4 text-gray-900">₹499<span class="text-base font-medium text-gray-500">/month</span></p>
+            <ul class="mb-6 text-gray-700 space-y-2 text-center text-sm sm:text-base">
+              <li>✔️ All Premium features</li>
+              <li>✔️ Unlimited AI design credits</li>
+              <li>✔️ Team collaboration tools</li>
+              <li>✔️ Custom branding & fonts</li>
+              <li>✔️ Early access to new features</li>
+            </ul>
+            <button class="bg-pink-600 text-white px-5 sm:px-6 py-2 rounded-lg font-semibold hover:bg-pink-700 transition text-sm sm:text-base">Go Premium Plus</button>
+          </div>
+        </div>
+        <!-- FAQ Section -->
+        <div class="w-full max-w-3xl mx-auto mt-14 sm:mt-20 mb-16 sm:mb-24 px-2 sm:px-0">
+          <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6 sm:mb-8 text-gray-900">Frequently Asked Questions</h2>
+          <div id="faq-list" class="space-y-4">
+            <!-- FAQ Item 1 -->
+            <div class="bg-white rounded-xl shadow border border-gray-200">
+              <button type="button" class="w-full flex justify-between items-center px-4 sm:px-6 py-4 sm:py-5 focus:outline-none faq-toggle">
+                <span class="text-base sm:text-lg font-medium text-gray-900 text-left">Is CardCrafter really free to use?</span>
+                <svg class="w-6 h-6 text-gray-500 transform transition-transform duration-300 faq-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div class="faq-content overflow-hidden max-h-0 transition-all duration-300 px-4 sm:px-6">
+                <p class="py-3 text-gray-700 text-sm sm:text-base">
+                  Yes! You can create and download unlimited business cards for free. Premium features are available for advanced needs, but the basic card maker is always free.
+                </p>
+              </div>
+            </div>
+            <!-- FAQ Item 2 -->
+            <div class="bg-white rounded-xl shadow border border-gray-200">
+              <button type="button" class="w-full flex justify-between items-center px-4 sm:px-6 py-4 sm:py-5 focus:outline-none faq-toggle">
+                <span class="text-base sm:text-lg font-medium text-gray-900 text-left">Can I use my own logo and colors?</span>
+                <svg class="w-6 h-6 text-gray-500 transform transition-transform duration-300 faq-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div class="faq-content overflow-hidden max-h-0 transition-all duration-300 px-4 sm:px-6">
+                <p class="py-3 text-gray-700 text-sm sm:text-base">
+                  Absolutely! You can upload your logo and customize colors, fonts, and details to match your brand perfectly.
+                </p>
+              </div>
+            </div>
+            <!-- FAQ Item 3 -->
+            <div class="bg-white rounded-xl shadow border border-gray-200">
+              <button type="button" class="w-full flex justify-between items-center px-4 sm:px-6 py-4 sm:py-5 focus:outline-none faq-toggle">
+                <span class="text-base sm:text-lg font-medium text-gray-900 text-left">How do I print my business card?</span>
+                <svg class="w-6 h-6 text-gray-500 transform transition-transform duration-300 faq-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div class="faq-content overflow-hidden max-h-0 transition-all duration-300 px-4 sm:px-6">
+                <p class="py-3 text-gray-700 text-sm sm:text-base">
+                  After designing, simply download your card as an image or PDF. You can print it at home or send it to any professional print shop.
+                </p>
+              </div>
+            </div>
+            <!-- FAQ Item 4 -->
+            <div class="bg-white rounded-xl shadow border border-gray-200">
+              <button type="button" class="w-full flex justify-between items-center px-4 sm:px-6 py-4 sm:py-5 focus:outline-none faq-toggle">
+                <span class="text-base sm:text-lg font-medium text-gray-900 text-left">Can I edit my card after saving?</span>
+                <svg class="w-6 h-6 text-gray-500 transform transition-transform duration-300 faq-arrow" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              <div class="faq-content overflow-hidden max-h-0 transition-all duration-300 px-4 sm:px-6">
+                <p class="py-3 text-gray-700 text-sm sm:text-base">
+                  Yes, you can revisit your design, make changes, and download the updated version anytime if you have an account.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- About Steps Section -->
+        <section class="w-full bg-white py-10 sm:py-16">
+          <div class="max-w-5xl mx-auto px-2 sm:px-4">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6 sm:mb-8 text-gray-900">
+              Why Choose Card Crafter?
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6 sm:gap-8">
+              <!-- Step 1 -->
+              <div class="flex flex-col items-center text-center">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-blue-100 mb-4">
+                  <svg class="w-6 h-6 sm:w-7 sm:h-7 text-blue-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M12 4v16m8-8H4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <h4 class="font-semibold text-base sm:text-lg mb-2">Easy to Use</h4>
+                <p class="text-gray-600 text-xs sm:text-sm">No design skills needed. Create cards in minutes with our intuitive editor.</p>
+              </div>
+              <!-- Step 2 -->
+              <div class="flex flex-col items-center text-center">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-purple-100 mb-4">
+                  <svg class="w-6 h-6 sm:w-7 sm:h-7 text-purple-600" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M8 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <h4 class="font-semibold text-base sm:text-lg mb-2">Professional Templates</h4>
+                <p class="text-gray-600 text-xs sm:text-sm">Choose from a wide range of modern, stylish, and professional templates.</p>
+              </div>
+              <!-- Step 3 -->
+              <div class="flex flex-col items-center text-center">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-pink-100 mb-4">
+                  <svg class="w-6 h-6 sm:w-7 sm:h-7 text-pink-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M12 8v4l3 3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="12" cy="12" r="10"/>
+                  </svg>
+                </div>
+                <h4 class="font-semibold text-base sm:text-lg mb-2">AI-Powered Design</h4>
+                <p class="text-gray-600 text-xs sm:text-sm">Let AI suggest creative ideas and layouts tailored to your needs.</p>
+              </div>
+              <!-- Step 4 -->
+              <div class="flex flex-col items-center text-center">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-green-100 mb-4">
+                  <svg class="w-6 h-6 sm:w-7 sm:h-7 text-green-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <h4 class="font-semibold text-base sm:text-lg mb-2">Instant Download</h4>
+                <p class="text-gray-600 text-xs sm:text-sm">Download your card instantly or order high-quality prints.</p>
+              </div>
+              <!-- Step 5 -->
+              <div class="flex flex-col items-center text-center">
+                <div class="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-full bg-yellow-100 mb-4">
+                  <svg class="w-6 h-6 sm:w-7 sm:h-7 text-yellow-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M12 17v.01M12 7v6" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="12" cy="12" r="10"/>
+                  </svg>
+                </div>
+                <h4 class="font-semibold text-base sm:text-lg mb-2">100% Free Basic Plan</h4>
+                <p class="text-gray-600 text-xs sm:text-sm">Start designing for free. Upgrade anytime for more features.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <footer class="w-full bg-gray-900 text-white p-6 sm:p-8 mt-12 sm:mt-20">
+          <div class="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
+            <!-- Brand Info -->
+            <div>
+              <div class="text-xl sm:text-2xl font-bold mb-2">Card Crafter</div>
+              <p class="text-gray-300 text-xs sm:text-sm">
+                Card Crafter helps you design, customize, and print business cards with ease.<br>
+                Create stunning designs for your brand or personal needs in just minutes.
+              </p>
+            </div>
+            <!-- Quick Links -->
+            <div>
+              <div class="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Quick Links</div>
+              <nav class="flex flex-col space-y-1 sm:space-y-2">
+                <a href="#" class="hover:text-blue-400 transition-colors duration-300 ease-in-out text-sm sm:text-base">Home</a>
+                <a href="#" class="hover:text-blue-400 transition-colors duration-300 ease-in-out text-sm sm:text-base">Features</a>
+                <a href="#" class="hover:text-blue-400 transition-colors duration-300 ease-in-out text-sm sm:text-base">Pricing</a>
+                <a href="#" class="hover:text-blue-400 transition-colors duration-300 ease-in-out text-sm sm:text-base">FAQ</a>
+                <a href="#" class="hover:text-blue-400 transition-colors duration-300 ease-in-out text-sm sm:text-base">Contact</a>
+              </nav>
+            </div>
+            <!-- Resources -->
+            <div>
+              <div class="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Resources</div>
+              <nav class="flex flex-col space-y-1 sm:space-y-2">
+                <a href="#" class="hover:text-blue-400 transition-colors duration-300 ease-in-out text-sm sm:text-base">Blog</a>
+                <a href="#" class="hover:text-blue-400 transition-colors duration-300 ease-in-out text-sm sm:text-base">Tutorials</a>
+                <a href="#" class="hover:text-blue-400 transition-colors duration-300 ease-in-out text-sm sm:text-base">Help Center</a>
+                <a href="#" class="hover:text-blue-400 transition-colors duration-300 ease-in-out text-sm sm:text-base">Privacy Policy</a>
+                <a href="#" class="hover:text-blue-400 transition-colors duration-300 ease-in-out text-sm sm:text-base">Terms of Service</a>
+              </nav>
+            </div>
+            <!-- Social Media -->
+            <div>
+              <div class="text-lg sm:text-xl font-semibold mb-3 sm:mb-4">Follow Us</div>
+              <div class="flex space-x-3 sm:space-x-4">
+                <a href="#" aria-label="Facebook" class="hover:text-blue-400 transition-colors duration-300 ease-in-out">
+                  <svg class="w-5 h-5 sm:w-6 sm:h-6 fill-current" viewBox="0 0 24 24">
+                    <path d="M22 12.07C22 6.48 17.52 2 12 2S2 6.48 2 12.07c0 5 3.66 9.13 8.44 9.93v-7.03h-2.54v-2.9h2.54V9.84c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.2 2.23.2v2.45h-1.26c-1.24 0-1.63.77-1.63 1.56v1.87h2.78l-.44 2.9h-2.34v7.03C18.34 21.2 22 17.07 22 12.07z"/>
+                  </svg>
+                </a>
+                <a href="#" aria-label="Twitter" class="hover:text-blue-400 transition-colors duration-300 ease-in-out">
+                  <svg class="w-5 h-5 sm:w-6 sm:h-6 fill-current" viewBox="0 0 24 24">
+                    <path d="M22.46 6c-.77.35-1.6.59-2.47.7a4.18 4.18 0 0 0 1.84-2.3 8.3 8.3 0 0 1-2.63 1A4.14 4.14 0 0 0 12 9.03c0 .32.04.64.1.94C8.28 9.8 5.1 8.13 2.98 5.7a4.13 4.13 0 0 0-.56 2.08c0 1.44.73 2.7 1.85 3.44a4.07 4.07 0 0 1-1.87-.52v.05c0 2.01 1.43 3.68 3.33 4.06-.35.1-.72.16-1.1.16-.27 0-.53-.03-.78-.07.53 1.65 2.07 2.85 3.89 2.88A8.33 8.33 0 0 1 2 19.54a11.75 11.75 0 0 0 6.29 1.84c7.55 0 11.68-6.26 11.68-11.68 0-.18-.01-.36-.02-.54A8.18 8.18 0 0 0 24 4.59a8.3 8.3 0 0 1-2.54.7z"/>
+                  </svg>
+                </a>
+                <a href="#" aria-label="LinkedIn" class="hover:text-blue-400 transition-colors duration-300 ease-in-out">
+                  <svg class="w-5 h-5 sm:w-6 sm:h-6 fill-current" viewBox="0 0 24 24">
+                    <path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11.75 20h-3v-10h3v10zm-1.5-11.27c-.97 0-1.75-.79-1.75-1.76s.78-1.76 1.75-1.76 1.75.79 1.75 1.76-.78 1.76-1.75 1.76zm15.25 11.27h-3v-5.6c0-1.33-.03-3.05-1.86-3.05-1.86 0-2.14 1.45-2.14 2.95v5.7h-3v-10h2.88v1.36h.04c.4-.75 1.38-1.54 2.84-1.54 3.04 0 3.6 2 3.6 4.59v5.59z"/>
+                  </svg>
+                </a>
+                <a href="#" aria-label="Instagram" class="hover:text-blue-400 transition-colors duration-300 ease-in-out">
+                  <svg class="w-5 h-5 sm:w-6 sm:h-6 fill-current" viewBox="0 0 24 24"></svg>
+                    <path d="M12 2.2c3.2 0 3.584.012 4.85.07 1.17.056 1.97.24 2.43.41a4.92 4.92 0 0 1 1.77 1.03 4.92 4.92 0 0 1 1.03 1.77c.17.46.354 1.26.41 2.43.058 1.266.07 1.65.07 4.85s-.012 3.584-.07 4.85c-.056 1.17-.24 1.97-.41 2.43a4.92 4.92 0 0 1-1.03 1.77 4.92 4.92 0 0 1-1.77 1.03c-.46.17-1.26.354-2.43.41-1.266.058-1.65.07-4.85.07s-3.584-.012-4.85-.07c-1.17-.056-1.97-.24-2.43-.41a4.92 4.92 0 0 1-1.77-1.03 4.92 4.92 0 0 1-1.03-1.77c-.17-.46-.354-1.26-.41-2.43C2.212 15.784 2.2 15.4 2.2 12s.012-3.584.07-4.85c.056-1.17.24-1.97.41-2.43a4.92 4.92 0 0 1 1.03-1.77 4.92 4.92 0 0 1 1.77-1.03c.46-.17 1.26-.354 2.43-.41C8.416 2.212 8.8 2.2 12 2.2zm0-2.2C8.736 0 8.332.013 7.052.072 5.77.13 4.77.32 3.97.6a7.07 7.07 0 0 0-2.57 1.64A7.07 7.07 0 0 0 .6 4.03c-.28.8-.47 1.8-.53 3.08C.013 8.332 0 8.736 0 12c0 3.264.013 3.668.072 4.948.058 1.28.25 2.28.53 3.08a7.07 7.07 0 0 0 1.64 2.57 7.07 7.07 0 0 0 2.57 1.64c.8.28 1.8.47 3.08.53C8.332 23.987 8.736 24 12 24s3.668-.013 4.948-.072c1.28-.058 2.28-.25 3.08-.53a7.07 7.07 0 0 0 2.57-1.64 7.07 7.07 0 0 0 1.64-2.57c.28-.8.47-1.8.53-3.08.059-1.28.072-1.684.072-4.948s-.013-3.668-.072-4.948c-.058-1.28-.25-2.28-.53-3.08a7.07 7.07 0 0 0-1.64-2.57A7.07 7.07 0 0 0 19.97.6c-.8-.28-1.8-.47-3.08-.53C15.668.013 15.264 0 12 0zm0 5.838A6.162 6.162 0 1 0 18.162 12 6.162 6.162 0 0 0 12 5.838zm0 10.162A4 4 0 1 1 16 12a4 4 0 0 1-4 4zm6.406-11.844a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44z"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </section>
+    <style>
+      @media (max-width: 640px) {
+        .ai .grid-cols-1.sm\:grid-cols-2.md\:grid-cols-3,
+        .ai .grid-cols-1.sm\:grid-cols-2.md\:grid-cols-4,
+        .ai .grid-cols-1.sm\:grid-cols-2.md\:grid-cols-5 {
+          grid-template-columns: 1fr !important;
+        }
+        .ai .max-w-4xl,
+        .ai .max-w-5xl,
+        .ai .max-w-3xl,
+        .ai .max-w-7xl {
+          max-width: 100vw !important;
+          padding-left: 0.5rem !important;
+          padding-right: 0.5rem !important;
+        }
+        .ai .p-8 { padding: 1.25rem !important; }
+        .ai .p-6 { padding: 1rem !important; }
+        .ai .mb-8 { margin-bottom: 1.5rem !important; }
+        .ai .mt-8 { margin-top: 1.5rem !important; }
+        .ai .rounded-2xl { border-radius: 1rem !important; }
+        .ai .shadow-xl, .ai .shadow-2xl { box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important; }
+        .ai .text-4xl { font-size: 1.5rem !important; }
+        .ai .text-3xl { font-size: 1.25rem !important; }
+        .ai .text-2xl { font-size: 1.125rem !important; }
+        .ai .text-xl { font-size: 1rem !important; }
+        .ai .text-lg { font-size: 0.95rem !important; }
+        .ai .text-base { font-size: 0.9rem !important; }
+        .ai .text-sm { font-size: 0.85rem !important; }
+        .ai .text-xs { font-size: 0.8rem !important; }
+        .ai .py-16 { padding-top: 2rem !important; padding-bottom: 2rem !important; }
+        .ai .py-10 { padding-top: 1.25rem !important; padding-bottom: 1.25rem !important; }
+        .ai .mt-24 { margin-top: 2rem !important; }
+        .ai .mb-24 { margin-bottom: 2rem !important; }
+        .ai .mt-20 { margin-top: 1.5rem !important; }
+        .ai .mb-20 { margin-bottom: 1.5rem !important; }
+        .ai .mt-16 { margin-top: 1.25rem !important; }
+        .ai .mb-16 { margin-bottom: 1.25rem !important; }
+        .ai .mt-12 { margin-top: 1rem !important; }
+        .ai .mb-12 { margin-bottom: 1rem !important; }
+        .ai .mt-10 { margin-top: 0.75rem !important; }
+        .ai .mb-10 { margin-bottom: 0.75rem !important; }
+        .ai .mt-8 { margin-top: 0.5rem !important; }
+        .ai .mb-8 { margin-bottom: 0.5rem !important; }
+        .ai .mt-6 { margin-top: 0.5rem !important; }
+        .ai .mb-6 { margin-bottom: 0.5rem !important; }
+        .ai .mt-4 { margin-top: 0.25rem !important; }
+        .ai .mb-4 { margin-bottom: 0.25rem !important; }
+        .ai .px-4 { padding-left: 0.5rem !important; padding-right: 0.5rem !important; }
+        .ai .px-2 { padding-left: 0.25rem !important; padding-right: 0.25rem !important; }
+        .ai .p-4 { padding: 1rem !important; }
+        .ai .p-3 { padding: 0.75rem !important; }
+      }
+    </style>
+      <div class="border-t border-gray-700 mt-6 pt-4 text-center text-sm text-gray-400">
+        © 2025 Card Crafter. All rights reserved.
+      </div>
+    </footer></svg>
+    <script>
+      // FAQ Dropdown Logic
+      document.querySelectorAll('.faq-toggle').forEach((btn, idx) => {
+        btn.addEventListener('click', function () {
+          const content = btn.nextElementSibling;
+          const arrow = btn.querySelector('.faq-arrow');
+          const isOpen = content.style.maxHeight && content.style.maxHeight !== '0px';
+
+          // Close all others
+          document.querySelectorAll('.faq-content').forEach((el, i) => {
+            if (el !== content) {
+              el.style.maxHeight = null;
+              el.previousElementSibling.querySelector('.faq-arrow').classList.remove('rotate-180');
+            }
+          });
+
+          if (!isOpen) {
+            content.style.maxHeight = content.scrollHeight + 'px';
+            arrow.classList.add('rotate-180');
+          } else {
+            content.style.maxHeight = null;
+            arrow.classList.remove('rotate-180');
+          }
+        });
+      });
+
+      // On resize, update open FAQ heights
+      window.addEventListener('resize', () => {
+        document.querySelectorAll('.faq-content').forEach(content => {
+          if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+            content.style.maxHeight = content.scrollHeight + 'px';
+          }
+        });
+      });
+    </script>
+    </section>
+</section>
+<script>
+  // Hide scrollbar utility for Tailwind (add this to your CSS if not present)
+  if (!document.getElementById('scrollbar-hide-style')) {
+    const style = document.createElement('style');
+    style.id = 'scrollbar-hide-style';
+    style.innerHTML = `.scrollbar-hide::-webkit-scrollbar { display: none; } .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }`;
+    document.head.appendChild(style);
+  }
+
+  // Category scroll logic
+  const catScroll = document.getElementById('cat-scroll');
+  const leftBtn = document.getElementById('cat-left');
+  const rightBtn = document.getElementById('cat-right');
+
+  function updateArrows() {
+    if (!catScroll) return;
+    leftBtn.style.display = catScroll.scrollLeft > 0 ? 'block' : 'none';
+    rightBtn.style.display = (catScroll.scrollLeft + catScroll.offsetWidth) < catScroll.scrollWidth ? 'block' : 'none';
+  }
+
+  if (catScroll && leftBtn && rightBtn) {
+    leftBtn.addEventListener('click', () => {
+      catScroll.scrollBy({ left: -200, behavior: 'smooth' });
+    });
+    rightBtn.addEventListener('click', () => {
+      catScroll.scrollBy({ left: 200, behavior: 'smooth' });
+    });
+    catScroll.addEventListener('scroll', updateArrows);
+    window.addEventListener('resize', updateArrows);
+    // Initial update
+    setTimeout(updateArrows, 100);
+  }
+</script>
+
+</div>
+
+
+</section>
+<script>
+    const btn = document.getElementById('menu-toggle');
+    const menu = document.getElementById('mobile-menu');
+    btn.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+    });
+  </script>
+
+</body>
+</html>
